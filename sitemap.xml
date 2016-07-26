@@ -7,15 +7,12 @@
 <loc>/</loc>
 </url>
 <url>
-<loc>/api/definitions/</loc>
-</url>
-<url>
 <loc>/api/</loc>
 </url>
 <url>
-<loc>/api/paths/</loc>
+<loc>/api/mock-service/</loc>
 </url>
 <url>
-<loc>/api/security/</loc>
+<loc>/api/provisioning/</loc>
 </url>
 </urlset>
