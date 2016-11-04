@@ -147,16 +147,48 @@
     {
       "id": "414w8dwr",
       "name": "My first mock service",
-      "domains": ["414w8dwr.mocklab.io"],
+      "domains": ["414w8dwr.mocklab.io", "my-custom-hostname.mocklab.io"],
+      "ownerId": "lw5r75vd"
+    },
+    {
+      "id": "ndzew",
+      "name": "Number two service",
+      "domains": ["ndzew.mocklab.io"],
       "ownerId": "lw5r75vd"
     }
   ]
 }
-</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="v1_mock_services_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/v1/mock-services</h4></div><div class="modal-body"><div class="alert alert-info"><p>Create a new mock service</p></div><ul class="nav nav-tabs"><li class="active"><a href="#v1_mock_services_post_request" data-toggle="tab">Request</a></li><li><a href="#v1_mock_services_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="v1_mock_services_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{ "name": "My first mock service" }
-</code></pre></div><div class="tab-pane" id="v1_mock_services_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>New mock service created</p></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="v1_mock_services__serviceId_" class="panel-title">/v1/mock-services/{serviceId}</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_v1_mock_services__serviceId_"><span class="parent"></span>/v1/mock-services/{serviceId}</a> <span class="methods"><a href="#v1_mock_services__serviceId__get"><span class="badge badge_get">get</span></a> <a href="#v1_mock_services__serviceId__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_v1_mock_services__serviceId_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#v1_mock_services__serviceId__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div><div onclick="window.location.href = '#v1_mock_services__serviceId__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="v1_mock_services__serviceId__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/v1/mock-services/{serviceId}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#v1_mock_services__serviceId__get_request" data-toggle="tab">Request</a></li><li><a href="#v1_mock_services__serviceId__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="v1_mock_services__serviceId__get_request"><h3>URI Parameters</h3><ul><li><strong>serviceId</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="v1_mock_services__serviceId__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Single mock service details</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="v1_mock_services_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/v1/mock-services</h4></div><div class="modal-body"><div class="alert alert-info"><p>Create a new mock service</p></div><ul class="nav nav-tabs"><li class="active"><a href="#v1_mock_services_post_request" data-toggle="tab">Request</a></li><li><a href="#v1_mock_services_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="v1_mock_services_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Schema</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "hostname": {
+      "type": "string",
+      "pattern": "^[a-z0-9\\-]*$",
+      "maxLength": 256
+    }
+  },
+  "required": [
+    "name"
+  ]
+}</code></pre><p><strong>Example</strong>:</p><pre><code>{
+  "name": "My first mock service",
+  "hostname": "my-custom-hostname"
+}
+</code></pre></div><div class="tab-pane" id="v1_mock_services_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>New mock service created</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
   "id": "414w8dwr",
   "name": "My first mock service",
-  "domains": ["414w8dwr.mocklab.io"],
+  "domains": ["414w8dwr.mocklab.io", "my-custom-hostname.mocklab.io"],
+  "ownerId": "lw5r75vd"
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="v1_mock_services__serviceId_" class="panel-title">/v1/mock-services/{serviceId}</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_v1_mock_services__serviceId_"><span class="parent"></span>/v1/mock-services/{serviceId}</a> <span class="methods"><a href="#v1_mock_services__serviceId__get"><span class="badge badge_get">get</span></a> <a href="#v1_mock_services__serviceId__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_v1_mock_services__serviceId_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#v1_mock_services__serviceId__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div><div onclick="window.location.href = '#v1_mock_services__serviceId__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="v1_mock_services__serviceId__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/v1/mock-services/{serviceId}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#v1_mock_services__serviceId__get_request" data-toggle="tab">Request</a></li><li><a href="#v1_mock_services__serviceId__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="v1_mock_services__serviceId__get_request"><h3>URI Parameters</h3><ul><li><strong>serviceId</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="v1_mock_services__serviceId__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Single mock service details</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "id": "414w8dwr",
+  "name": "My first mock service",
+  "domains": ["414w8dwr.mocklab.io", "my-custom-hostname.mocklab.io"],
   "ownerId": "lw5r75vd"
 }
 </code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="v1_mock_services__serviceId__delete"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent"></span>/v1/mock-services/{serviceId}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#v1_mock_services__serviceId__delete_request" data-toggle="tab">Request</a></li><li><a href="#v1_mock_services__serviceId__delete_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="v1_mock_services__serviceId__delete_request"><h3>URI Parameters</h3><ul><li><strong>serviceId</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="v1_mock_services__serviceId__delete_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Mock service deleted</p></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#v1_mock_services">/v1/mock-services</a></li><li><a href="#v1_mock_services__serviceId_">/v1/mock-services/{serviceId}</a></li></ul></div></div></div></div></body></html>
