@@ -10,9 +10,6 @@
 <loc>/api/</loc>
 </url>
 <url>
-<loc>/api/mock-service/</loc>
-</url>
-<url>
 <loc>/api/provisioning/</loc>
 </url>
 </urlset>
