@@ -1,0 +1,22 @@
+Tasks to document
+=================
+
+Configuring a stubbed response
+- URL matching
+- Parameter matching
+- Body matching
+
+Using from automated tests
+- Note about persistent vs. transient stubs
+
+Importing WireMock stubs
+Viewing logged traffic
+
+Automating service creation with the API
+
+
+
+To document when ready
+======================
+Proxying and interception
+Recording

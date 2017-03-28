@@ -1,0 +1,280 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Automated Testing with Java - MockLab</title>
+
+
+
+
+
+
+
+<meta name="description" content="Creating automated tests in Java and MockLab">
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="MockLab">
+<meta property="og:title" content="Automated Testing with Java">
+
+
+
+
+  <meta property="og:description" content="Creating automated tests in Java and MockLab">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-03-28T15:23:53+01:00">
+  
+    <link rel="next" href="/docs/mocking/" title="API Reference: Mocking">
+  
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "",
+      "url" : null,
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="MockLab Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!--<link href="https://fonts.googleapis.com/css?family=Lato|Source+Code+Pro" rel="stylesheet">-->
+<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">-->
+<link href="https://fonts.googleapis.com/css?family=Cairo:300" rel="stylesheet">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<nav class="header-nav">
+    <ul class="header-nav__container--left">
+        <li class="header-nav__item--logo">
+            <a href="/">
+                <img src="/images/mocklab_logo_transparent.png" title="MockLab logo"/>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="header-nav__container--right">
+
+
+
+        <li class="header-nav__item header-nav__item--login">
+            <a href="https://app.mocklab.io/login" title="Log in">Log in</a>
+        </li>
+
+    </ul>
+</nav>
+
+
+    
+
+<div id="main" role="main">
+  
+
+
+<div class="sidebar sticky">
+  <nav class="nav__list">
+
+    <ul>
+      
+
+      
+      <li>
+        <a href="/docs/overview/">
+
+        Overview
+      </a>
+      
+      <li>
+        <a href="/docs/stubbing/">
+
+        Stubbing responses
+      </a>
+      
+      <li>
+        <a href="/docs/automated-testing-with-java/" class="nav__list-item--selected">
+        
+
+        Automated Testing with Java
+      </a>
+      
+      <li>
+        <a href="/docs/provisioning/">
+
+        API Reference: Provisioning
+      </a>
+      
+      <li>
+        <a href="/docs/mocking/">
+
+        API Reference: Mocking
+      </a>
+      
+    </ul>
+  </nav>
+</div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Automated Testing with Java">
+    <meta itemprop="description" content="Everything that can be done with MockLab’s web UI can also be done via its APIs. This can be useful when automatingtesting, as it allows stubs to be configured and torn down on-demans by individual test cases rather than it beingnecessary to configure an entire test suite’s stubs manually up-front. Working this way can make your tests a lot morereadable as it makes their preconditions expicit.">
+    <meta itemprop="datePublished" content="March 28, 2017">
+    
+
+    <div class="page__inner-wrap">
+      <header>
+        <h1 class="page__title" itemprop="headline">Automated Testing with Java
+</h1>
+      </header>
+
+      <section class="page__content" itemprop="text">
+        <p>Everything that can be done with MockLab’s web UI can also be done via its APIs. This can be useful when automating
+testing, as it allows stubs to be configured and torn down on-demans by individual test cases rather than it being
+necessary to configure an entire test suite’s stubs manually up-front. Working this way can make your tests a lot more
+readable as it makes their preconditions expicit.</p>
+
+<p>MockLab’s API is 100% compatible with <a href="http://wiremock.org/docs/api/">WireMock’s</a>. This means that WireMock
+can be used as a Java client for MockLab.</p>
+
+<p>After you’ve created a mock API, setting up a WireMock client to it is a one-line task (you can copy-paste this from
+your mock API’s Settings page):</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">WireMock</span> <span class="n">paymentGatewayMock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WireMock</span><span class="o">(</span><span class="s">"https"</span><span class="o">,</span> <span class="s">"my-payment-gateway.mocklab.io"</span><span class="o">,</span> <span class="mi">443</span><span class="o">);</span>
+</code></pre>
+</div>
+
+<p>Then you can create stubs as <a href="http://wiremock.org/docs/stubbing/">documented on the WireMock site</a>:</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">paymentGatewayMock</span><span class="o">.</span><span class="na">register</span><span class="o">(</span>
+    <span class="n">post</span><span class="o">(</span><span class="n">urlPathEqualTo</span><span class="o">(</span><span class="s">"/send-payment"</span><span class="o">))</span>
+        <span class="o">.</span><span class="na">willReturn</span><span class="o">(</span><span class="n">aResponse</span><span class="o">().</span><span class="na">withStatus</span><span class="o">(</span><span class="mi">201</span><span class="o">)));</span>
+</code></pre>
+</div>
+
+<p>And make assertions about received requests:</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">paymentGatewayMock</span><span class="o">.</span><span class="na">verifyThat</span><span class="o">(</span>
+    <span class="n">postRequestedFor</span><span class="o">(</span><span class="n">urlPathEqualTo</span><span class="o">(</span><span class="s">"/send-payment"</span><span class="o">)));</span>
+</code></pre>
+</div>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-copyright">&copy; 2017 MockLab.</div>
+
+<div id="dialog" style="display: none">
+  <h2 class="mocklab-popup__title">Looking for super-quick hosted mocks? Try MockLab</h2>
+  <p>Instant mock services on your own public URL, zero code required. Paste, record and generate mock data. Tester-friendly UI.</p>
+</div>
+
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+
