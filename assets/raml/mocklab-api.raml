@@ -82,3 +82,72 @@ schemas:
     responses:
       200:
         description: mock API deleted
+
+
+  /collaborators:
+    get:
+      description: Get all collaborators for a mock API
+      responses:
+        200:
+          description: All collaborators for a single mock API
+          body:
+            application/json:
+              example: |
+                {
+                  "mockApiCollaborators": [
+                    {
+                      "id": "vnldx",
+                      "mockApiId": "9p84x",
+                      "userId": "87dkb",
+                      "username": "user-one"
+                    },
+                    {
+                      "id": "1nwen",
+                      "mockApiId": "9p84x",
+                      "userId": "mnmex",
+                      "username": "user-two"
+                    }
+                  ]
+                }
+
+    post:
+      description: Add a new collaborator to a mock API
+      body:
+        application/json:
+          example: |
+            {
+              "mockApiCollaborator": {
+                "username": "new-user-three"
+              }
+            }
+
+      responses:
+        201:
+          description: New collaborator added
+          body:
+            application/json:
+              example: |
+                {
+                  "mockApiCollaborator": {
+                    "id": "gxzlp",
+                    "mockApiId": "9p84x",
+                    "userId": "nl9dn",
+                    "username": "new-user-three"
+                  }
+                }
+
+        422:
+          description: User does not exist or is already a collaborator on this API
+
+        404:
+          description: The mock API was not found
+
+        403:
+          description: The authenticated user is not allowed to perform this operation on this API
+
+    /{collaboratorId}:
+      delete:
+        description: Delete a collaborator from a mock API
+        responses:
+          200:
+            description: The collaborator was successfull deleted
