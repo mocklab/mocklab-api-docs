@@ -7,7 +7,13 @@
 <loc>/</loc>
 </url>
 <url>
+<loc>/docs/advanced-stubbing/</loc>
+</url>
+<url>
 <loc>/docs/automated-testing-with-java/</loc>
+</url>
+<url>
+<loc>/docs/default-responses/</loc>
 </url>
 <url>
 <loc>/docs/getting-started/</loc>
@@ -19,7 +25,13 @@
 <loc>/docs/provisioning/</loc>
 </url>
 <url>
+<loc>/docs/recording-stubs/</loc>
+</url>
+<url>
 <loc>/docs/response-templating/</loc>
+</url>
+<url>
+<loc>/docs/soap-stubbing/</loc>
 </url>
 <url>
 <loc>/docs/stubbing/</loc>
