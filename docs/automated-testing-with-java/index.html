@@ -51,7 +51,7 @@
 
 
   <meta property="og:type" content="article">
-  <meta property="article:published_time" content="2017-09-12T19:56:21+01:00">
+  <meta property="article:published_time" content="2017-09-13T09:11:52+01:00">
   
     <link rel="next" href="/docs/default-responses/" title="How to: Serve a Default Response">
   
@@ -232,7 +232,7 @@
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Automated Testing with Java">
     <meta itemprop="description" content="Everything that can be done with MockLab’s web UI can also be done via its APIs. This can be useful when automatingtesting, as it allows stubs to be configured and torn down on-demans by individual test cases rather than it beingnecessary to configure an entire test suite’s stubs manually up-front. Working this way can make your tests a lot morereadable as it makes their preconditions expicit.">
-    <meta itemprop="datePublished" content="September 12, 2017">
+    <meta itemprop="datePublished" content="September 13, 2017">
     
 
     <div class="page__inner-wrap">
@@ -250,28 +250,64 @@ readable as it makes their preconditions expicit.</p>
 <p>MockLab’s API is 100% compatible with <a href="http://wiremock.org/docs/api/">WireMock’s</a>. This means that WireMock
 can be used as a Java client for MockLab.</p>
 
-<p>After you’ve created a mock API, setting up a WireMock client to it is a one-line task (you can copy-paste this from
-your mock API’s Settings page):</p>
+<h2 id="adding-wiremock-to-your-project">Adding WireMock to your project</h2>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">WireMock</span> <span class="n">paymentGatewayMock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WireMock</span><span class="o">(</span><span class="s">"https"</span><span class="o">,</span> <span class="s">"my-payment-gateway.mocklab.io"</span><span class="o">,</span> <span class="mi">443</span><span class="o">);</span>
+<p>WireMock is distributed in two different types of JAR - a standard “thin” JAR, and a “fat” standalone JAR. The latter of these
+contains all of WireMock’s dependencies and repackages (shades) most of these. Either can be used as a dependency in your
+project and which you choose depends primarily on whether you have dependencies already present that conflict with WireMock’s.
+Picking the standalone version generally avoids these problems but at the cost of a larger JAR download.</p>
+
+<p>If you’re using Gradle you can add WireMock to your build file’s dependencies as follows:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>testCompile 'com.github.tomakehurst:wiremock:2.8.0' // thin JAR
+testCompile 'com.github.tomakehurst:wiremock-standalone:2.8.0' // standalone JAR
 </code></pre>
 </div>
 
-<p>Then you can create stubs as <a href="http://wiremock.org/docs/stubbing/">documented on the WireMock site</a>:</p>
+<p>Or if you’re using Maven:</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">paymentGatewayMock</span><span class="o">.</span><span class="na">register</span><span class="o">(</span>
-    <span class="n">post</span><span class="o">(</span><span class="n">urlPathEqualTo</span><span class="o">(</span><span class="s">"/send-payment"</span><span class="o">))</span>
-        <span class="o">.</span><span class="na">willReturn</span><span class="o">(</span><span class="n">aResponse</span><span class="o">().</span><span class="na">withStatus</span><span class="o">(</span><span class="mi">201</span><span class="o">)));</span>
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- Thin JAR --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.github.tomakehurst<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>wiremock<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.8.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="c">&lt;!-- Standalone JAR --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.github.tomakehurst<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>wiremock-standalone<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.8.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="configuring-your-test">Configuring your test</h2>
+
+<p>After you’ve created a mock API in the MockLab UI, setting up a WireMock client to it is a one-line task (you can copy-paste this from
+your mock API’s Settings page):</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">WireMock</span> <span class="n">paymentGatewayMock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WireMock</span><span class="o">(</span><span class="s">"https"</span><span class="o">,</span> <span class="s">"payments-example.mocklab.io"</span><span class="o">,</span> <span class="mi">443</span><span class="o">);</span>
+</code></pre>
+</div>
+
+<p>Then in your test cases you can create stubs as <a href="http://wiremock.org/docs/stubbing/">documented on the WireMock site</a>:</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">paymentGatewayMock</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/send-payment"</span><span class="o">).</span><span class="na">willReturn</span><span class="o">(</span><span class="n">created</span><span class="o">()));</span>
 </code></pre>
 </div>
 
 <p>And make assertions about received requests:</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">paymentGatewayMock</span><span class="o">.</span><span class="na">verifyThat</span><span class="o">(</span>
-    <span class="n">postRequestedFor</span><span class="o">(</span><span class="n">urlPathEqualTo</span><span class="o">(</span><span class="s">"/send-payment"</span><span class="o">)));</span>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">paymentGatewayMock</span><span class="o">.</span><span class="na">verifyThat</span><span class="o">(</span><span class="n">postRequestedFor</span><span class="o">(</span><span class="n">urlPathEqualTo</span><span class="o">(</span><span class="s">"/send-payment"</span><span class="o">)));</span>
 </code></pre>
 </div>
 
+<h2 id="example-project">Example project</h2>
+
+<p>For a complete, working example of a Java web project using MockLab with automated tests see <a href="https://github.com/mocklab/mocklab-demo-app">the mocklab demo app</a>.</p>
 
         
       </section>
