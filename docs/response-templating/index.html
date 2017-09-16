@@ -51,7 +51,7 @@
 
 
   <meta property="og:type" content="article">
-  <meta property="article:published_time" content="2017-09-13T09:24:37+01:00">
+  <meta property="article:published_time" content="2017-09-16T18:35:35+01:00">
   
     <link rel="next" href="/docs/soap-stubbing/" title="How to: Stub a SOAP response">
   
@@ -232,7 +232,7 @@
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Response Templating">
     <meta itemprop="description" content="MockLab stub responses can be configured to return dynamically generated headers and body, using Handlebars templates. Thiscan be enabled by ticking the “Enable templating” box in the response section of the stub form:">
-    <meta itemprop="datePublished" content="September 13, 2017">
+    <meta itemprop="datePublished" content="September 16, 2017">
     
 
     <div class="page__inner-wrap">
@@ -291,6 +291,70 @@ are available e.g.</p>
 </span></code></pre>
 </div>
 
+<h2 id="xpath-helpers">XPath helpers</h2>
+<p>Addiionally some helpers are available for working with JSON and XML.</p>
+
+<p>When the incoming request contains XML, the <code class="highlighter-rouge">xPath</code> helper can be used to extract values or sub documents via an XPath 1.0 expression. For instance, given the XML</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;outer&gt;</span>
+    <span class="nt">&lt;inner&gt;</span>Stuff<span class="nt">&lt;/inner&gt;</span>
+<span class="nt">&lt;/outer&gt;</span>
+</code></pre>
+</div>
+
+<p>The following will render “Stuff” into the output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">{xPath</span><span class="w"> </span><span class="err">request.body</span><span class="w"> </span><span class="err">'/outer/inner/text()'</span><span class="p">}</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>And given the same XML the following will render <code class="highlighter-rouge">&lt;inner&gt;Stuff&lt;/inner&gt;</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">{xPath</span><span class="w"> </span><span class="err">request.body</span><span class="w"> </span><span class="err">'/outer/inner'</span><span class="p">}</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>As a convenience the <code class="highlighter-rouge">soapXPath</code> helper also exists for extracting values from SOAP bodies e.g. for the SOAP document:</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;soap:Envelope</span> <span class="na">xmlns:soap=</span><span class="s">"http://www.w3.org/2003/05/soap-envelope/"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;soap:Body&gt;</span>
+        <span class="nt">&lt;m:a&gt;</span>
+            <span class="nt">&lt;m:test&gt;</span>success<span class="nt">&lt;/m:test&gt;</span>
+        <span class="nt">&lt;/m:a&gt;</span>
+    <span class="nt">&lt;/soap:Body&gt;</span>
+<span class="nt">&lt;/soap:Envelope&gt;</span>
+</code></pre>
+</div>
+
+<p>The following will render “success” in the output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">{soapXPath</span><span class="w"> </span><span class="err">request.body</span><span class="w"> </span><span class="err">'/a/test/text()'</span><span class="p">}</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="jsonpath-helper">JSONPath helper</h2>
+
+<p>It is similarly possible to extract JSON values or sub documents via JSONPath using the <code class="highlighter-rouge">jsonPath</code> helper. Given the JSON</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"outer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"inner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stuff"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The following will render “Stuff” into the output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">{jsonPath</span><span class="w"> </span><span class="err">request.body</span><span class="w"> </span><span class="err">'$.outer.inner'</span><span class="p">}</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>And for the same JSON the following will render <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="nt">"inner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stuff"</span><span class="w"> </span><span class="p">}</span></code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">{jsonPath</span><span class="w"> </span><span class="err">request.body</span><span class="w"> </span><span class="err">'$.outer'</span><span class="p">}</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
         
       </section>
