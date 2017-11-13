@@ -28,10 +28,16 @@
 <loc>/docs/provisioning/</loc>
 </url>
 <url>
+<loc>/docs/proxying/</loc>
+</url>
+<url>
 <loc>/docs/recording-stubs/</loc>
 </url>
 <url>
 <loc>/docs/response-templating/</loc>
+</url>
+<url>
+<loc>/docs/simulating-faults/</loc>
 </url>
 <url>
 <loc>/docs/soap-stubbing/</loc>
