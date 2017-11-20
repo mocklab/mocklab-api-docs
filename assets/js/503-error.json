@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "status": "503",
+      "title":  "Service Unavilable",
+      "detail": "MockLab is temporarily unavilable."
+    }
+  ]
+}
