@@ -218,7 +218,7 @@ mixpanel.init('71b55ac57b47107ca89d12dc7c75cf00', {
             </a>
         </li>
     </ul>
-    <div class = searchWrapper>
+    <!-- <div class = searchWrapper>
       <div class = searchBar>
         <span class="fa fa-search" style="color:#c1c1c1;"></span>
         <input type="text" id="search-box" placeholder="Search the Docs"/>
@@ -226,10 +226,15 @@ mixpanel.init('71b55ac57b47107ca89d12dc7c75cf00', {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@1/dist/instantsearch.min.js"></script>
     <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script> -->
+<!-- <script>
   var client = algoliasearch('KXP714IXAH', 'ff0635b54603dcdf324374d32842f764')
   var index = client.initIndex('mocklab_docs');
+  var contents;
+  var timer;
+  var stopDuplicates = false;
+  var eventSent = false;
+  var contentsSent;
   $('#search-box').autocomplete({ hint: false }, [
     {
       source: $.fn.autocomplete.sources.hits(index, { hitsPerPage: 5 }),
@@ -240,10 +245,39 @@ mixpanel.init('71b55ac57b47107ca89d12dc7c75cf00', {
         }
       }
     }
-  ]).on('autocomplete:selected', function(event, suggestion, dataset) {
+  ]).on('input', function(e){
+      contents = $('#search-box').val();
+});
+   $('#search-box').one('input', function(e){
+     setTimeout(function(e){
+       stopDuplicates = true,
+       contentsSent = contents,
+       mixpanel.track('docs searched', {
+         'Searched Term' : contents
+       });
+     }, 2000);
+     setInterval(function(e){
+       if (contents !== contentsSent) {
+         contentsSent = contents,
+         mixpanel.track('docs searched', {
+           'Searched Term' : contents
+         });
+       }
+     }, 2000);
+   });
+   $('#search-box').on('autocomplete:selected', function(event, suggestion, dataset) {
+     if (stopDuplicates === false) {
+     mixpanel.track('docs searched', {
+       'Searched Term' : contents
+   }),
     window.location.href = suggestion.url;
-  });
-</script>
+}
+    else {
+        window.location.href = suggestion.url;
+    }
+});
+
+</script> -->
 
 
     <ul class="header-nav__container--right">
@@ -327,7 +361,7 @@ mixpanel.init('71b55ac57b47107ca89d12dc7c75cf00', {
 <!-- end custom footer snippets -->
         
 
-<div class="page__footer-copyright">&copy; 2017 MockLab.</div>
+<div class="page__footer-copyright">&copy; 2018 MockLab.</div>
 
 <div id="dialog" style="display: none">
   <h2 class="mocklab-popup__title">Looking for super-quick hosted mocks? Try MockLab</h2>
